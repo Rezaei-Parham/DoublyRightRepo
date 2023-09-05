@@ -6,7 +6,6 @@ from tqdm import tqdm
 import time
 import random
 # import wandb
-
 import torch
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler, autocast
@@ -641,19 +640,6 @@ def main():
     if not os.path.isdir(args.model_folder):
         os.makedirs(args.model_folder)
 
-    # wandb
-    # if args.use_wandb:
-    #     wandb.init(project='Visual Prompting')
-    #     wandb.config.update(args)
-    #     wandb.run.name = args.filename
-    #     wandb.watch(prompter, criterion, log='all', log_freq=10)
-
-    # if args.evaluate:
-    #     acc1_mean = validate(val_loader_list, val_dataset_name, texts_list, model, model_text, model_image,
-    #                          prompter, add_prompter, criterion, args)
-    #     dr_acc, dr_bl_acc = dr_validate(model, prompter, add_prompter, criterion, args)
-    #     print('double right', dr_acc, dr_bl_acc)
-    #     return
     if args.evaluate:
         _, _ = dr_validate_others(0, model_text, model_image, prompter, add_prompter, criterion, args,
                                   name_list, root_path_list, json_list, emb_attcat_list,
@@ -695,24 +681,6 @@ def main():
     class_names_map = {}
     for itr, na in enumerate(class_names):
         class_names_map[na.replace('_', ' ').replace('-', ' ').replace('/', ' ')] = itr
-
-    # for ee in range(10):
-    #     train_ori(train_imagenet_loader, cat_text_emb, model, model_text, model_image, prompter, add_prompter,
-    #               optimizer, scheduler, criterion, scaler, ee, args)
-    # #
-    # acc1_mean = validate(val_loader_list, val_dataset_name, texts_list, model, model_text, model_image,
-    #                      prompter, add_prompter, criterion, args)
-
-    # imgtrain = torchvision.datasets.ImageFolder(
-    #     os.path.join(imagenet_root, 'train'),
-    #     transform=preprocess224)
-    #
-    # imgtrainloader = DataLoader(imgtrain,
-    #            batch_size=args.batch_size * 2, pin_memory=True,
-    #            num_workers=args.num_workers, shuffle=False, sampler=val_sampler)
-    #
-    # acc1_mean = validate([imgtrainloader], val_dataset_name, texts_list, model, model_text, model_image,
-    #                      prompter, add_prompter, criterion, args)
 
 
 
